@@ -6,41 +6,54 @@ var connect = require('gulp-connect'); // Gulp Web server runner plugin
 var uglify = require('gulp-uglify');
 var notify = require('gulp-notify');
 var sass = require('gulp-sass');
+const babel = require('gulp-babel');
 
 // Configuration
 var configuration = {
-    paths: {
-        src: {
-            html: './src/*.html',
-            css: [
-                './src/styles/style.scss'
-            ],
-            js: './src/*.js'
-        },
-        dist: './dist'
-    },
-    localServer: {
-        port: 8001,
-        url: 'http://localhost:8001/'
-    }
+	paths: {
+		src: {
+			html: './src/*.html',
+			css: [
+				'./src/styles/style.scss'
+			],
+			js: './src/*.js'
+		},
+		dist: './dist'
+	},
+	localServer: {
+		port: 8001,
+		url: 'http://localhost:8001/'
+	}
 };
 
 // Gulp task to copy HTML files to output directory
-gulp.task('html', function() {
-    return gulp.src(configuration.paths.src.html)
-        .pipe(gulp.dest(configuration.paths.dist))
-        .pipe(connect.reload());
+gulp.task('html', function () {
+	return gulp.src(configuration.paths.src.html)
+		.pipe(gulp.dest(configuration.paths.dist))
+		.pipe(connect.reload());
 });
 
 
 // JavaScript Concat and Uglify
-gulp.task('javascript', gulp.series( function() {
-	return gulp.src(configuration.paths.src.js)
+gulp.task('javascript', gulp.series(function () {
+	return gulp.src(
+			[
+				'./node_modules/jquery/dist/jquery.min.js',
+				configuration.paths.src.js
+			]
+		)
 		.pipe(concat('main.min.js'))
+		.pipe(babel({
+			presets: [
+				['@babel/env', {
+					modules: false
+				}]
+			]
+		}))
 		.pipe(gulp.dest('dist/js'))
 
 		// Uglify
-		.pipe(uglify())
+		// .pipe(uglify())
 		.pipe(gulp.dest('dist/js'))
 
 		// Notify
@@ -54,13 +67,15 @@ gulp.task('javascript', gulp.series( function() {
 }));
 
 // SASS Compile and Autoprefixer
-gulp.task('style', gulp.series( function() {
+gulp.task('style', gulp.series(function () {
 	return gulp.src(configuration.paths.src.css)
 		// .pipe(plumber({errorHandle: onError}))
-		.pipe(sass({outputStyle: 'compressed'}))
+		.pipe(sass({
+			outputStyle: 'compressed'
+		}))
 		// .on('error', onError)
 		.pipe(concat('site.css'))
-        .pipe(gulp.dest(configuration.paths.dist + '/css'))
+		.pipe(gulp.dest(configuration.paths.dist + '/css'))
 		// .pipe(gulp.dest('../'))
 
 		// Autoprefixer
@@ -82,26 +97,28 @@ gulp.task('style', gulp.series( function() {
 
 // Gulp task to create a web server
 gulp.task('connect', function () {
-    return connect.server({
-        root: 'dist',
-        port: configuration.localServer.port,
-        livereload: true
-    });
+	return connect.server({
+		root: 'dist',
+		port: configuration.localServer.port,
+		livereload: true
+	});
 });
 
 // Gulp task to open the default web browser
-gulp.task('open', function(){
-    return gulp.src('dist/index.html')
-        .pipe(open({uri: configuration.localServer.url}));
+gulp.task('open', function () {
+	return gulp.src('dist/index.html')
+		.pipe(open({
+			uri: configuration.localServer.url
+		}));
 });
 
 // Watch the file system and reload the website automatically
 gulp.task('watch', function () {
-    // livereload.listen();
-    gulp.watch(configuration.paths.src.html, gulp.series(['html']));
-    gulp.watch(configuration.paths.src.css, gulp.series(['style']));
-    gulp.watch(configuration.paths.src.js, gulp.series(['javascript']));
-    connect.reload();
+	// livereload.listen();
+	gulp.watch(configuration.paths.src.html, gulp.series(['html']));
+	gulp.watch(configuration.paths.src.css, gulp.series(['style']));
+	gulp.watch(configuration.paths.src.js, gulp.series(['javascript']));
+	connect.reload();
 });
 
 // Gulp default task

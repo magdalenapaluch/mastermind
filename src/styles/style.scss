@@ -11,9 +11,9 @@ body {
     background-color: palegoldenrod;
 
     &__user-result {
-        display: flex;width: 40px;
+        display: flex;
+        width: 40px;
         flex-wrap: wrap;
-        
     }
 
     &__result-slot {
@@ -26,12 +26,17 @@ body {
         background-color: gray;
     }
 
-    &__user-config {
+    &__user-config, &__configuration-wrapper {
         display: flex;
         flex: 0 1 70%;
+
     }
 
-    &__user-config-slot {
+    &__user-config-slot, &__configuration-slot {
+
+        .active &{
+            cursor: pointer;
+        }
         width: 30px;
         margin-right: 10px;
         height: 30px;
@@ -56,48 +61,63 @@ body {
     }
 
     &__pins {
-        border-top: 1px solid black;
+    
         display: flex;
         align-items: center;
+        flex: 0 0 50%;
+        max-width: 50%;
+        flex-wrap: wrap;
+
+        &-wrapper {
+            display: flex;
+            justify-content: space-between;    border-top: 1px solid black;
+        }
     }
 
     &__pin {
-        margin-right: 10px;
+        cursor: pointer;
+        margin: 10px 10px 10px 0;
         width: 30px;
         height: 30px;
         border-radius: 100%;
         border: 1px solid black;
 
-        &--red {
-            background-color: red;
+        &--selected {
+            transition:  background-color .2s;
         }
 
-        &--green {
-            background-color: green;
-        }
-
-        &--blue {
-            background-color: blue;
-        }
-
-        &--yellow {
-            background-color: yellow;
-        }
-
-        &--brown {
-            background-color: brown;
-        }
-
-        &--orange {
-            background-color: orange;
-        }
-
-        &--black {
-            background-color: black;
-        }
-
-        &--white {
-            background-color: white;
-        }
+        
     }
+}
+
+[data-color="red"] {
+    background-color: red;
+}
+
+[data-color="green"]  {
+    background-color: green;
+}
+
+[data-color="blue"]  {
+    background-color: blue;
+}
+
+[data-color="yellow"] {
+    background-color: yellow;
+}
+
+[data-color="brown"]  {
+    background-color: brown;
+}
+
+[data-color="orange"]  {
+    background-color: orange;
+}
+
+[data-color="black"]  {
+    background-color: black;
+}
+
+[data-color="white"]  {
+    background-color: white;
 }
