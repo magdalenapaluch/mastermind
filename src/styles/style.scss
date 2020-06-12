@@ -1,5 +1,103 @@
-$red :black;
-
 body {
-    background-color:$red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.gameboard {
+    padding: 20px;
+    border: 1px solid black;
+    background-color: palegoldenrod;
+
+    &__user-result {
+        display: flex;width: 40px;
+        flex-wrap: wrap;
+        
+    }
+
+    &__result-slot {
+        margin: 10px 10px 0 0;
+        width: 10px;
+        // flex: 0 0 50%;
+        // max-width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        background-color: gray;
+    }
+
+    &__user-config {
+        display: flex;
+        flex: 0 1 70%;
+    }
+
+    &__user-config-slot {
+        width: 30px;
+        margin-right: 10px;
+        height: 30px;
+        border-radius: 100%;
+        background-color: gray;
+        border: 1px solid black;
+    }
+
+    &__check {
+        &:not(.active) {
+            display: none;
+        }
+    }
+
+    &__user-config-wrapper {
+        display: flex;
+        justify-content: space-between;
+        height: 70px;
+        width: 100%;
+        border-top: 1px solid black;
+        align-items: center;
+    }
+
+    &__pins {
+        border-top: 1px solid black;
+        display: flex;
+        align-items: center;
+    }
+
+    &__pin {
+        margin-right: 10px;
+        width: 30px;
+        height: 30px;
+        border-radius: 100%;
+        border: 1px solid black;
+
+        &--red {
+            background-color: red;
+        }
+
+        &--green {
+            background-color: green;
+        }
+
+        &--blue {
+            background-color: blue;
+        }
+
+        &--yellow {
+            background-color: yellow;
+        }
+
+        &--brown {
+            background-color: brown;
+        }
+
+        &--orange {
+            background-color: orange;
+        }
+
+        &--black {
+            background-color: black;
+        }
+
+        &--white {
+            background-color: white;
+        }
+    }
 }
