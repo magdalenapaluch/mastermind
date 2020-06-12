@@ -1,0 +1,30 @@
+{
+	"name": "mastermind",
+	"version": "0.0.1",
+	"description": "Mastermind Game",
+	"main": "index.js",
+	"license": "MIT",
+	"browserslist": [
+		"defaults",
+		"not IE 11",
+		"not IE_Mob 11",
+		"maintained node versions"
+	],
+	"devDependencies": {
+		"gulp": "^4.0.2",
+		"gulp-concat": "^2.6.1",
+		"gulp-notify": "latest",
+		"gulp-sass": "latest",
+		"gulp-uglify": "latest"
+	},
+	"dependencies": {
+		"@fancyapps/fancybox": "3.5.3",
+		"animate.css": "^3.7.0",
+		"css-framework": "git+https://github.com/querycz/css-framework#8.0.1",
+		"gulp-connect": "^5.7.0",
+		"gulp-open": "^3.0.1",
+		"jquery": "^3.3.1",
+		"jquery-viewport-checker": "^1.8.8",
+		"smooth-scroll": "^16.0.0"
+	}
+}
